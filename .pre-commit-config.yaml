@@ -16,14 +16,14 @@ repos:
         args: [ --fix ]
       - id: ruff-format
         types_or: [ python, pyi, jupyter ]
-  - repo: local
-    hooks:
-      - id: jupyter-nb-clear-output
-        name: jupyter-nb-clear-output
-        files: \.ipynb$
-        stages: [commit]
-        language: system
-        entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace
+  # - repo: local
+  #   hooks:
+  #     - id: jupyter-nb-clear-output
+  #       name: jupyter-nb-clear-output
+  #       files: \.ipynb$
+  #       stages: [commit]
+  #       language: system
+  #       entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: "v1.0.0"
     hooks:
