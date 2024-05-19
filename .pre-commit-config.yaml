@@ -1,0 +1,40 @@
+fail_fast: true
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: no-commit-to-branch
+        args: ["--branch", "master"]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.0
+    hooks:
+      - id: ruff
+        types_or: [ python, pyi, jupyter ]
+        args: [ --fix ]
+      - id: ruff-format
+        types_or: [ python, pyi, jupyter ]
+  - repo: local
+    hooks:
+      - id: jupyter-nb-clear-output
+        name: jupyter-nb-clear-output
+        files: \.ipynb$
+        stages: [commit]
+        language: system
+        entry: jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: "v1.0.0"
+    hooks:
+      - id: mypy
+        args:
+          [--ignore-missing-imports, --install-types, --explicit-package-bases]
+  - repo: local
+    hooks:
+      - id: tests
+        name: tests
+        entry: poetry run pytest
+        language: system
+        types: [file, python]
+        pass_filenames: false
